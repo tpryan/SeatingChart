@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Report" creationComplete="view1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			
+			protected function view1_creationCompleteHandler(event:FlexEvent):void
+			{
+				total.text = data.length;
+				
+				var pCount:int = 0;
+				var aCount:int = 0;
+				var cCount:int = 0;
+				
+				for (var i:int=0; i< data.length; i++){
+					var item:Object = data[i];
+					
+					if (item.status == "present"){
+						pCount++;
+					}
+					else if (item.status == "absent"){
+						aCount++;
+					}
+					else if (item.status == "cutting"){
+						cCount++;
+					}
+					
+					
+				}
+				
+				total.text = data.length;
+				present.text = pCount.toString();
+				absent.text = aCount.toString();
+				cutting.text = cCount.toString();
+				
+			}
+			
+			
+			protected function backButton_clickHandler(event:MouseEvent):void
+			{
+				navigator.popView();
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:navigationContent>
+		<s:Button id="backButton" label="Back" click="backButton_clickHandler(event)" />
+	</s:navigationContent>
+	
+	<s:TextInput id="total" x="10" y="10"/>
+	<s:TextInput id="present" x="10" y="55"/>
+	<s:TextInput id="absent" x="10" y="100"/>
+	<s:TextInput id="cutting" x="10" y="145"/>
+	<s:Label x="317" y="31" text="Total Students"/>
+	<s:Label x="317" y="76" text="Present"/>
+	<s:Label x="317" y="121" text="Absent"/>
+	<s:Label x="317" y="166" text="Unaccounted"/>
+</s:View>

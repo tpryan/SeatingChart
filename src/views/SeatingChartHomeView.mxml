@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Attendence" creationComplete="init(event)" resize="onResizeView(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
+			import mx.rpc.xml.SimpleXMLDecoder;
+			import mx.utils.ArrayUtil;
+			
+			[Bindable]
+			public var students:ArrayCollection = new ArrayCollection();
+			
+			
+			protected function init(event:FlexEvent):void
+			{
+				initStudents();	
+			}
+			
+			protected function onResizeView(event:ResizeEvent):void
+			{
+				checkOrientation();
+			}
+			
+			protected function checkOrientation():void{
+				if(stage == null ||  stage.orientation == "landscape"){
+					currentState = "landscape";
+				}else{
+					currentState = "portrait";
+				}
+			}
+			
+			protected function initStudents():void{
+				
+				var studentFile:File = File.applicationDirectory.resolvePath("students.xml");
+				var fileStream:FileStream = new FileStream();
+				fileStream.open(studentFile, FileMode.READ);
+				var studentsXML:XML = XML(fileStream.readUTFBytes(fileStream.bytesAvailable)); 
+				fileStream.close();
+				
+				students = convertXmlToArrayCollection(studentsXML);
+			}
+			
+			private function convertXmlToArrayCollection( file:XML ):ArrayCollection
+			{
+				var xml:XMLDocument = new XMLDocument( file );
+				
+				var decoder:SimpleXMLDecoder = new SimpleXMLDecoder();
+				var data:Object = decoder.decodeXML( xml );
+				var array:Array = ArrayUtil.toArray( data.students.student );
+				
+				return new ArrayCollection( array );
+			}
+			
+			
+			protected function reportButton_clickHandler(event:MouseEvent):void
+			{
+				navigator.pushView(ReportView,students);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="landscape"/>
+		<s:State name="portrait"/>
+	</s:states>
+	
+	
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		
+		
+		
+		
+	</fx:Declarations>
+
+	<s:actionContent>
+		<s:Button id="reportButton" label="Summary" click="reportButton_clickHandler(event)" />
+	</s:actionContent>
+	
+	<s:List id="attendenceList" contentBackgroundColor="0xDDDDDD" left="10" right="10" top="10" bottom="10" dataProvider="{students}" labelField="firstName">
+		<s:layout>
+			<s:TileLayout  orientation.landscape="rows" orientation.portrait="columns"  requestedColumnCount.landscape="5" requestedColumnCount.portrait="3" horizontalGap="20" verticalGap="20" paddingLeft="10" paddingTop="10"/>
+		</s:layout>
+		
+		<s:itemRenderer>
+			<fx:Component>
+				<s:IconItemRenderer  click="iconitemrenderer1_clickHandler(event)" messageFunction="getDisplayName" iconFunction="getIcon" iconPlaceholder="assets/absent.png">
+					<fx:Script>
+						<![CDATA[
+							
+							protected var status:String = "present";
+							
+							private function getDisplayName(ob:Object):String{
+								return ob.firstName + " " + ob.lastName;
+							}
+							
+							private function getIcon(obj:Object):String{
+								var iconPath:String = "assets/present.png";
+								
+								if (obj.status == "absent"){
+									iconPath = "assets/absent.png"
+									status = "absent";	
+								}
+								
+								
+								return iconPath;
+							}
+							
+							protected function iconitemrenderer1_clickHandler(event:MouseEvent):void
+							{
+								var localStatus:String = status;
+								
+								
+								if (localStatus =="present"){
+									localStatus = "cutting";
+									iconFunction = function():String{return "assets/cutting.png"};
+											
+								}
+								else if (localStatus == "cutting"){
+									localStatus = "absent";
+									iconFunction = function():String{return "assets/absent.png"};
+								}
+								else if (localStatus == "absent"){
+									localStatus = "present";
+									iconFunction = function():String{return "assets/present.png"};
+								}
+								
+								status = localStatus;
+								outerDocument.students[outerDocument.attendenceList.selectedIndex].status = localStatus;
+								outerDocument.attendenceList.selectedIndex = -1;
+							
+								
+								
+								
+							}
+							
+						]]>
+					</fx:Script>
+				</s:IconItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>
+		
+	</s:List>
+	
+	
+	
+</s:View>

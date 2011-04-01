@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<students>
+	<student>
+		<firstName>Terry</firstName>
+		<lastName>Ryan</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Kevin</firstName>
+		<lastName>Hoyt</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Paul</firstName>
+		<lastName>Trani</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Ryan</firstName>
+		<lastName>Stewart</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Mihail</firstName>
+		<lastName>Corlan</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Mark</firstName>
+		<lastName>Doherty</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Lee</firstName>
+		<lastName>Brimelow</lastName>
+		<status>absent</status>
+	</student>
+	<student>
+		<firstName>Tom</firstName>
+		<lastName>Krcha</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Serge</firstName>
+		<lastName>Jespers</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Greg</firstName>
+		<lastName>Wilson</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>James</firstName>
+		<lastName>Ward</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Christophe</firstName>
+		<lastName>Contrants</lastName>
+		<status>present</status>
+	</student>
+	<student>
+		<firstName>Duane</firstName>
+		<lastName>Nickul</lastName>
+		<status>absent</status>
+	</student>
+	<student>
+		<firstName>Ben</firstName>
+		<lastName>Forta</lastName>
+		<status>present</status>
+	</student>
+	
+	
+
+</students>
